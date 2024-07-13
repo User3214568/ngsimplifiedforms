@@ -1,0 +1,5 @@
+<fieldset>
+  <legend>{{ stepContext.step.stepNumber }} - {{ stepContext.step.title }}</legend>
+  <app-group-wrapper [groupWrapperContext]="{groups: stepContext.step.groups, value: stepContext.value}"></app-group-wrapper>
+  <app-action-wrapper (stepDataEmitter)="stepDataEmitter.emit($event)" [actionWrapperContext]="stepContext"></app-action-wrapper>
+</fieldset>
