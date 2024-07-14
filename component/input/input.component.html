@@ -1,9 +1,9 @@
-<div [formGroup]="formGroup">
-  <label>{{ element.title }}</label>
+<div [formGroup]="formElementContext.formGroup">
+  <label>{{ formElementContext.formElement.title }}</label>
   <input
-    [id]="element.name"
-    [name]="element.name"
-    [type]="element.type"
-    [formControlName]="element.name"
+    [id]="formElementContext.formElement.name"
+    [name]="formElementContext.formElement.name"
+    [type]="formElementContext.formElement.type"
+    [formControlName]="formElementContext.formElement.name"
   >
 </div>

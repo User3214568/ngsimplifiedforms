@@ -5,7 +5,6 @@ import {
 import {NextActionHandler} from "../action/next-action.handler";
 import {BackActionHandler} from "../action/back-action.handler";
 import {Injectable} from "@angular/core";
-import {ActionComponent} from "../../component/action/action.component";
 
 @Injectable()
 export class ActionRegistrationService {
@@ -23,7 +22,7 @@ export class ActionRegistrationService {
       }
       return {
         ...action,
-        component: ActionComponent,
+        component: undefined,
         handler: handler
       };
     })

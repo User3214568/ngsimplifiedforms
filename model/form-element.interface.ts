@@ -13,11 +13,12 @@ export interface FormElementInterface extends FormElementAnnotationInterface {
 }
 
 export enum FormElementType {
-  INPUT = 'input',
+  TEXT = 'input',
   FILE = 'file',
+  DATE = 'date',
   SELECT = 'select',
   RADIO = 'radio',
-  TEXTAREA = 'textarea',
+  TEXT_AREA = 'textarea',
   EMAIL = 'mail',
   NUMBER = 'number',
   PHONE = 'tel',

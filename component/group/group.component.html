@@ -1,4 +1,6 @@
 <div>{{ groupContext.group.name }} - {{ groupContext.group.title }}</div>
 <div [formGroup]="formRxGroup">
-  <ng-template #formElements ></ng-template>
+  <app-form-element-wrapper
+    [formElementWrapperContext]="{formGroup: formRxGroup, formElements: groupContext.group.formElements}"
+  />
 </div>

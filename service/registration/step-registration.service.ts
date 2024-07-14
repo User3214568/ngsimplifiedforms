@@ -1,6 +1,4 @@
 import {FormStepAnnotationInterface, FormStepInterface} from "../../model/form-step.interface";
-import {ComponentConfigManager} from "../../config/component-config.manager";
-import {StepComponent} from "../../component/step/step.component";
 import {GroupRegistrationService} from "./group-registration.service";
 import {FormGroupInterface} from "../../model/form-group.interface";
 import {ActionRegistrationService} from "./action-registration.service";
@@ -24,7 +22,7 @@ export class StepRegistrationService {
       map.set(step.stepNumber, {
         ...step,
         actions: this.actionRegistrationService.getActionArray(step.actions),
-        component: StepComponent,
+        component: undefined,
         groups: this.groupRegistrationService.getGroupsMap(step.groups)
       });
     });
@@ -45,7 +43,7 @@ export class StepRegistrationService {
     groupMap.set(defaultGroup.name, defaultGroup);
     return {
       stepNumber: 1,
-      component: StepComponent,
+      component: undefined,
       groups: groupMap,
       actions: []
     };

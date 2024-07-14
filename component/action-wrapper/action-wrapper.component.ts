@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef} from '@angular/core';
 import {ActionWrapperContext} from "../../service/context/action-wrapper.context";
 import {ActionContext} from "../../service/context/action.context";
-import {act} from "@ngrx/effects";
+import {ComponentConfigManager} from "../../config/component-config.manager";
+import {ComponentTypeEnum} from "../../config/model/component-type.enum";
 
 @Component({
   selector: 'app-action-wrapper',
@@ -18,15 +19,15 @@ export class ActionWrapperComponent implements OnInit {
 
   @ViewChild('actions', {static: true, read: ViewContainerRef}) actionHostContainer!: ViewContainerRef;
 
-  constructor() {
+  constructor(private readonly componentConfigManager: ComponentConfigManager) {
     this.stepDataEmitter = new EventEmitter<number>();
   }
   ngOnInit() {
     this.actionWrapperContext.step.actions.forEach(action => {
-      if ((!this.actionWrapperContext.editMode && !action.onlyForEditMode) ||
-        (this.actionWrapperContext.editMode && action.onlyForEditMode)
-      ) {
-        const ref = this.actionHostContainer.createComponent(action.component);
+      if (this.actionWrapperContext.editMode || (!this.actionWrapperContext.editMode && !action.onlyForEditMode)) {
+        const ref = this.actionHostContainer.createComponent(
+          action.component ?? this.componentConfigManager.getComponent(ComponentTypeEnum.ACTION)
+        );
         const actionContext: ActionContext = {
           value: this.actionWrapperContext.value,
           step: this.actionWrapperContext.step,

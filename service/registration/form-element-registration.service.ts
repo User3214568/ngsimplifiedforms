@@ -1,5 +1,4 @@
 import {FormElementAnnotationInterface, FormElementInterface} from "../../model/form-element.interface";
-import {InputComponent} from "../../component/input/input.component";
 import {Injectable} from "@angular/core";
 
 @Injectable()
@@ -9,7 +8,7 @@ export class FormElementRegistrationService {
     console.log(`registration ${elementName}`);
     formElements.set(elementName, {
       ...formElement as FormElementInterface,
-      component: InputComponent,
+      component: undefined,
       name: elementName
     });
   }

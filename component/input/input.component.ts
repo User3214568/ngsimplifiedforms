@@ -7,6 +7,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {HlmInputDirective} from "@spartan-ng/ui-input-helm";
 import {HlmLabelDirective} from "@spartan-ng/ui-label-helm";
 import {FormElementInterface} from "../../model/form-element.interface";
+import {FormElementContext} from "../../service/context/form-element.context";
 
 @Component({
   selector: '[app-input]',
@@ -22,6 +23,5 @@ import {FormElementInterface} from "../../model/form-element.interface";
   styleUrl: './input.component.scss'
 })
 export class InputComponent {
-  @Input('element') element!: FormElementInterface;
-  @Input('formGroup') formGroup!: FormGroup;
+  @Input() formElementContext!: FormElementContext;
 }

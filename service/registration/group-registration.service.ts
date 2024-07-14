@@ -1,6 +1,5 @@
 import {FormGroupAnnotationInterface, FormGroupInterface} from "../../model/form-group.interface";
 import {FormElementAnnotationInterface, FormElementInterface} from "../../model/form-element.interface";
-import {GroupComponent} from "../../component/group/group.component";
 import {FormElementRegistrationService} from "./form-element-registration.service";
 import {Injectable} from "@angular/core";
 
@@ -17,7 +16,7 @@ export class GroupRegistrationService {
     groups.forEach((group) => {
       map.set(group.name, {
         ...group,
-        component: GroupComponent,
+        component: undefined,
         formElements: new Map<string, FormElementInterface>()
       })
     })
@@ -27,7 +26,7 @@ export class GroupRegistrationService {
   getDefaultGroup(): FormGroupInterface {
     return {
       name: 'default',
-      component: GroupComponent,
+      component: undefined,
       formElements: new Map<string, FormElementInterface>()
     }
   }

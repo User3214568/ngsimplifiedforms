@@ -3,6 +3,8 @@ import {FormStepInterface} from "../../model/form-step.interface";
 import {StepService} from "../../service/form/step.service";
 import {StepContext} from "../../service/context/step.context";
 import {StepWrapperContext} from "../../service/context/step-wrapper.context";
+import {ComponentConfigManager} from "../../config/component-config.manager";
+import {ComponentTypeEnum} from "../../config/model/component-type.enum";
 
 @Component({
   selector: 'app-step-wrapper',
@@ -19,11 +21,16 @@ export class StepWrapperComponent implements OnInit {
 
   protected activeStep!: FormStepInterface;
 
-  constructor(private readonly stepService: StepService) {}
+  constructor(
+    private readonly stepService: StepService,
+    private readonly componentConfigManager: ComponentConfigManager
+  ) {}
 
   ngOnInit(): void {
     this.activeStep = this.stepService.getDefaultActiveStep(this.stepWrapperContext.steps);
-    const ref = this.stepHostContainer.createComponent(this.activeStep.component);
+    const ref = this.stepHostContainer.createComponent(
+      this.activeStep.component ?? this.componentConfigManager.getComponent(ComponentTypeEnum.STEP)
+    );
     const stepContext: StepContext = {
       step: this.activeStep,
       value: this.stepWrapperContext.value,
@@ -32,6 +39,6 @@ export class StepWrapperComponent implements OnInit {
     ref.setInput('stepContext', stepContext);
     (ref.instance as any).stepDataEmitter.subscribe((stepNumber: number) => {
       this.activeStep = this.stepService.getStep(stepNumber, this.stepWrapperContext.steps);
-    })
+    });
   }
 }
