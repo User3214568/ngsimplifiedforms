@@ -7,6 +7,9 @@ import {SelectableComponent} from "../component/selectable/selectable.component"
 import {Inject, Injectable} from "@angular/core";
 import {ComponentTypeEnum} from "./model/component-type.enum";
 import {FormElementType} from "../model/form-element.interface";
+import {SelectComponent} from "../component/select/select.component";
+import {RadioComponent} from "../component/radio/radio.component";
+import {CheckboxComponent} from "../component/checkbox/checkbox.component";
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +46,11 @@ export class ComponentConfigManager {
         return InputComponent;
 
       case FormElementType.SELECT:
+        return SelectComponent;
       case FormElementType.RADIO:
+        return RadioComponent;
       case FormElementType.CHECKBOX:
-        return SelectableComponent;
+        return CheckboxComponent;
 
       default: return undefined;
     }

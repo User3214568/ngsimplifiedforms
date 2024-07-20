@@ -5,6 +5,7 @@ import {
 import {NextActionHandler} from "../action/next-action.handler";
 import {BackActionHandler} from "../action/back-action.handler";
 import {Injectable} from "@angular/core";
+import {act} from "@ngrx/effects";
 
 @Injectable()
 export class ActionRegistrationService {
@@ -19,6 +20,9 @@ export class ActionRegistrationService {
       }
       if (action.type === FormActionType.BACK) {
         handler = BackActionHandler;
+      }
+      if (!handler) {
+        throw new Error(`Undefined ${action.title} action handler`);
       }
       return {
         ...action,

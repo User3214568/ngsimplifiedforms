@@ -1,9 +1,11 @@
 import {CommonInterface} from "./common.interface";
+import {AbstractControl, ValidationErrors} from "@angular/forms";
 
 export interface FormElementAnnotationInterface extends CommonInterface {
   groupName?: string;
   description?: string;
   stepNumber?: number;
+  validators?: Array<(absCtl: AbstractControl) => ValidationErrors | null>;
 }
 
 export interface FormElementInterface extends FormElementAnnotationInterface {

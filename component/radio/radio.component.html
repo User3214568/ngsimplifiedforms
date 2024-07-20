@@ -1,0 +1,23 @@
+<div [formGroup]="formElementContext.formGroup">
+  <label>{{ formElementContext.formElement.title }}</label>
+  <div *ngFor="let option of formElementContext.formElement.options">
+    <input
+      [id]="formElementContext.formElement.name + option.value"
+      [name]="formElementContext.formElement.name"
+      [type]="formElementContext.formElement.type"
+      [value]="option.value"
+      [checked]="formElementContext.controlInstance?.value == option.value"
+      (change)="onSelectionChange($event)"
+    />
+    <label [for]="formElementContext.formElement.name + option.value">
+      {{ option.label }}
+    </label>
+    <div *ngIf="formElementContext.controlInstance?.touched">
+      <div
+        *ngFor="let err of Object.keys(formElementContext.controlInstance?.errors ?? [])"
+      >
+        {{ getDefaultErrorMessages(err) }}
+      </div>
+    </div>
+  </div>
+</div>

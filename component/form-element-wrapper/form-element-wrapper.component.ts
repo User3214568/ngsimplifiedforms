@@ -11,6 +11,7 @@ import {FormElementContext} from "../../service/context/form-element.context";
   styleUrl: './form-element-wrapper.component.scss'
 })
 export class FormElementWrapperComponent implements OnInit {
+
   @Input() formElementWrapperContext!: FormElementWrapperContext;
 
   @ViewChild('formElements', {static: true, read: ViewContainerRef}) formElementsHostContainer!: ViewContainerRef;
@@ -18,6 +19,7 @@ export class FormElementWrapperComponent implements OnInit {
   constructor(
     private readonly componentConfigManager: ComponentConfigManager
   ) {}
+
   ngOnInit() {
     this.formElementWrapperContext.formElements.forEach((element) => {
       const ref = this.formElementsHostContainer.createComponent(
@@ -25,9 +27,11 @@ export class FormElementWrapperComponent implements OnInit {
       );
       const context: FormElementContext = {
         formGroup: this.formElementWrapperContext.formGroup,
+        controlInstance: this.formElementWrapperContext.formGroup.get(element.name),
         formElement: element
       };
       ref.setInput('formElementContext', context);
     });
   }
+
 }

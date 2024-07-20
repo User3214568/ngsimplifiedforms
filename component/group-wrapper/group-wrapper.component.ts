@@ -29,7 +29,8 @@ export class GroupWrapperComponent implements OnInit {
       );
       const groupContext: GroupContext = {
         group: group,
-        value: this.groupWrapperContext.value
+        value: this.groupWrapperContext.value,
+        validity: this.groupWrapperContext.validity
       };
       ref.setInput('groupContext', groupContext);
     });

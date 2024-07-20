@@ -1,0 +1,16 @@
+<div [formGroup]="formElementContext.formGroup">
+  <label>{{ formElementContext.formElement.title }}</label>
+  <div *ngFor="let option of formElementContext.formElement.options; let i = index;" [formArrayName]="formElementContext.formElement.name">
+    <input
+      [id]="formElementContext.formElement.name + option.value"
+      [name]="formElementContext.formElement.name + option.value"
+      [type]="formElementContext.formElement.type"
+      [formControlName]="i"
+      (change)="onSelectionChange($event, i)"
+    >
+    <label [for]="formElementContext.formElement.name + option.value">
+      {{ option.label }}
+    </label>
+  </div>
+</div>
+

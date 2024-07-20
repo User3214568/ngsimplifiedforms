@@ -1,5 +1,7 @@
 import {
-  Component, EventEmitter, Input,
+  AfterContentChecked,
+  AfterViewInit,
+  Component, EventEmitter, Input, OnInit,
   Output,
 } from '@angular/core';
 import {FormStepInterface} from "../../model/form-step.interface";
@@ -17,14 +19,19 @@ import {StepContext} from "../../service/context/step.context";
   ],
   styleUrl: './step.component.scss'
 })
-export class StepComponent {
+export class StepComponent implements AfterContentChecked {
 
   @Output() protected stepDataEmitter: EventEmitter<number>;
 
-
+  protected valid!: boolean;
   @Input() stepContext!: StepContext;
 
   constructor() {
     this.stepDataEmitter = new EventEmitter<number>();
   }
+
+  ngAfterContentChecked() {
+    this.valid = this.stepContext.validity.isValid;
+  }
+
 }

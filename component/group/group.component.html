@@ -1,6 +1,6 @@
 <div>{{ groupContext.group.name }} - {{ groupContext.group.title }}</div>
 <div [formGroup]="formRxGroup">
   <app-form-element-wrapper
-    [formElementWrapperContext]="{formGroup: formRxGroup, formElements: groupContext.group.formElements}"
+    [formElementWrapperContext]="{formGroup: formRxGroup, formElements: groupContext.group.formElements, currentGroup: groupContext.group}"
   />
 </div>

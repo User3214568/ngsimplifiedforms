@@ -1,5 +1,11 @@
+<div>is valid : {{ valid }}</div>
+
 <fieldset>
-  <legend>{{ stepContext.step.stepNumber }} - {{ stepContext.step.title }}</legend>
-  <app-group-wrapper [groupWrapperContext]="{groups: stepContext.step.groups, value: stepContext.value}"></app-group-wrapper>
-  <app-action-wrapper (stepDataEmitter)="stepDataEmitter.emit($event)" [actionWrapperContext]="stepContext"></app-action-wrapper>
+  <app-group-wrapper
+    [groupWrapperContext]="{groups: stepContext.step.groups, value: stepContext.value, validity: stepContext.validity}"
+  ></app-group-wrapper>
+  <app-action-wrapper
+    (stepDataEmitter)="stepDataEmitter.emit($event)"
+    [actionWrapperContext]="{step: stepContext.step, editMode: stepContext.editMode, value: stepContext.value, validity: stepContext.validity}"
+  ></app-action-wrapper>
 </fieldset>

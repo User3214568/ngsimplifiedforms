@@ -28,17 +28,25 @@ export class StepWrapperComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeStep = this.stepService.getDefaultActiveStep(this.stepWrapperContext.steps);
+    this.createCurrentStepComponent();
+  }
+
+  createCurrentStepComponent(): void {
+    this.stepHostContainer.clear();
     const ref = this.stepHostContainer.createComponent(
       this.activeStep.component ?? this.componentConfigManager.getComponent(ComponentTypeEnum.STEP)
     );
-    const stepContext: StepContext = {
+    const stepContext = {
       step: this.activeStep,
       value: this.stepWrapperContext.value,
-      editMode: this.stepWrapperContext.editMode
+      editMode: this.stepWrapperContext.editMode,
+      validity: {isValid: false}
     };
     ref.setInput('stepContext', stepContext);
     (ref.instance as any).stepDataEmitter.subscribe((stepNumber: number) => {
       this.activeStep = this.stepService.getStep(stepNumber, this.stepWrapperContext.steps);
+      this.createCurrentStepComponent();
     });
   }
+
 }

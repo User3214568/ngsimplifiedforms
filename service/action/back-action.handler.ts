@@ -6,7 +6,7 @@ import {Injectable} from "@angular/core";
 })
 export class BackActionHandler extends AbstractActionHandler {
   onClick(event: Event): void {
-
+    this.stepEmitter.emit(this.context.step.stepNumber - 1);
   }
 
 }

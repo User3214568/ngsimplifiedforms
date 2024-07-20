@@ -1,6 +1,7 @@
 <button
   (click)="handler.onClick($event)"
   (focus)="handler.onFocus($event)"
+  [disabled]="!(actionContext.action.requireValidation && actionContext.validity.isValid)"
 >
   {{ actionContext.action.title }}
 </button>

@@ -6,9 +6,7 @@ import {Injectable} from "@angular/core";
 })
 export class NextActionHandler extends AbstractActionHandler {
   onClick(event: Event): void {
-    console.log(this.context.value);
-    console.log(this.context.value);
-    this.stepEmitter.emit(1);
+    this.stepEmitter.emit(this.context.step.stepNumber + 1);
   }
 
 }

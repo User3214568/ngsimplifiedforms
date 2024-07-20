@@ -26,8 +26,11 @@ export class GroupComponent implements OnInit {
 
   ngOnInit() {
     this.formRxGroup = this.groupService.getFormGroup(this.groupContext.group, this.groupContext.value);
+    Object.assign(this.groupContext.validity, {isValid: this.formRxGroup.valid});
     this.formRxGroup.valueChanges.subscribe(newValue => {
       Object.assign(this.groupContext.value, newValue);
+      Object.assign(this.groupContext.validity, {isValid: this.formRxGroup.valid});
+      console.log(`validation assigned `, this.groupContext.validity);
     });
   }
 }

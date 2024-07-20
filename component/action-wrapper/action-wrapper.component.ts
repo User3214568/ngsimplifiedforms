@@ -29,10 +29,8 @@ export class ActionWrapperComponent implements OnInit {
           action.component ?? this.componentConfigManager.getComponent(ComponentTypeEnum.ACTION)
         );
         const actionContext: ActionContext = {
-          value: this.actionWrapperContext.value,
-          step: this.actionWrapperContext.step,
-          action: action,
-          editMode: this.actionWrapperContext.editMode
+          ...this.actionWrapperContext,
+          action: action
         };
         ref.setInput('actionContext', actionContext);
         (ref.instance as any).stepDataEmitter.subscribe((value: number) => this.stepDataEmitter.emit(value));

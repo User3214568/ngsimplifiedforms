@@ -1,11 +1,14 @@
 <div [formGroup]="formElementContext.formGroup">
   <label>{{ formElementContext.formElement.title }}</label>
-  <input
-    [id]="formElementContext.formElement.name"
-    [name]="formElementContext.formElement.name"
-    [type]="formElementContext.formElement.type"
+  <select
     [formControlName]="formElementContext.formElement.name"
+    [attr.multiple]="formElementContext.formElement.multipleChoices"
+    [multiple]="formElementContext.formElement.multipleChoices"
   >
+    <option *ngFor="let option of formElementContext.formElement.options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
   <div *ngIf="formElementContext.controlInstance?.touched">
     <div
       *ngFor="let err of Object.keys(formElementContext.controlInstance?.errors ?? [])"
