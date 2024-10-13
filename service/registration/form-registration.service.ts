@@ -30,7 +30,7 @@ export class FormRegistrationService {
   }
 
   public registerForm(form: FormAnnotationInterface, formId: string) {
-    const steps = this.stepRegistrationService.getStepsMap(form.steps);
+    const steps = this.stepRegistrationService.getStepsMap(form.steps, form.actions);
     const formInstance : FormInterface = {
       ...form,
       editMode: false,
@@ -38,6 +38,21 @@ export class FormRegistrationService {
     };
     FormRegistrationService.getInstance().set(formId, formInstance);
     this.unQueueFormElementRegistration(formId);
+  }
+
+  public registerFormInheritance(baseFormId: string, targetFormId: string): void {
+    console.log('inheritance....');
+    const baseForm = FormRegistrationService.getInstance().get(baseFormId);
+    if (baseForm) {
+      baseForm.steps.forEach(step => {
+        step.groups.forEach(group => {
+          group.formElements.forEach(element => {
+            console.log('registration element' + element.name + '; trager: '  + targetFormId);
+            this.registerFormElement(element, element.name, targetFormId);
+          })
+        })
+      });
+    }
   }
 
   public unQueueFormElementRegistration(formId: string): void {

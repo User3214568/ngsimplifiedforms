@@ -4,6 +4,7 @@ import {FormActionInterface} from "../../model/form-action.interface";
 import {ActionContext} from "../../service/context/action.context";
 import {ActionHandlerInterface} from "../../service/action/action-handler.interface";
 import {AbstractActionHandler} from "../../service/action/abstract-action.handler";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-action',
@@ -22,7 +23,7 @@ export class ActionComponent implements OnInit {
 
   protected handler!: ActionHandlerInterface;
 
-  constructor(private readonly injector: Injector) {
+  constructor(private readonly injector: Injector, private readonly route: ActivatedRoute) {
     this.stepDataEmitter = new EventEmitter<number>();
   }
 
@@ -30,6 +31,7 @@ export class ActionComponent implements OnInit {
     const handler: AbstractActionHandler = this.injector.get(this.actionContext.action.handler);
     handler.stepEmitter = this.stepDataEmitter;
     handler.context = this.actionContext;
+    handler.params = this.route.snapshot.paramMap;
     this.handler = handler;
   }
 }

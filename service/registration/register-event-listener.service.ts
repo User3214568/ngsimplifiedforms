@@ -7,6 +7,7 @@ import {FormRegisterEventListener} from "../../event-listener/form-register.even
 import {FormElementEventListener} from "../../event-listener/form-element.event-listener";
 import {ActionRegistrationService} from "./action-registration.service";
 import {EventQueue} from "../../event/event.queue";
+import {FormInheritanceEventListener} from "../../event-listener/form-inheritance.event-listener";
 
 export class RegisterEventListenerService {
 
@@ -19,7 +20,8 @@ export class RegisterEventListenerService {
         { provide: ActionRegistrationService, useClass: ActionRegistrationService },
         { provide: FormElementRegistrationService, useClass: FormElementRegistrationService },
         { provide: FormRegisterEventListener, useClass: FormRegisterEventListener },
-        { provide: FormElementEventListener, useClass: FormElementEventListener }
+        { provide: FormElementEventListener, useClass: FormElementEventListener },
+        { provide: FormInheritanceEventListener, useClass: FormInheritanceEventListener}
       ]
     });
   }
@@ -28,6 +30,7 @@ export class RegisterEventListenerService {
     const injector = this.getInjector();
     injector.get(FormRegisterEventListener).register();
     injector.get(FormElementEventListener).register();
+    injector.get(FormInheritanceEventListener).register();
     EventQueue.eventsRegistrationCompleted();
   }
 }

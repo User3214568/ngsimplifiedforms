@@ -6,6 +6,7 @@ export interface FormElementAnnotationInterface extends CommonInterface {
   description?: string;
   stepNumber?: number;
   validators?: Array<(absCtl: AbstractControl) => ValidationErrors | null>;
+  weight?: number;
 }
 
 export interface FormElementInterface extends FormElementAnnotationInterface {

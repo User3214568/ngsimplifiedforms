@@ -1,6 +1,7 @@
 import {ActionHandlerInterface} from "./action-handler.interface";
 import {ActionContext} from "../context/action.context";
 import {EventEmitter} from "@angular/core";
+import {ParamMap} from "@angular/router";
 
 export abstract class AbstractActionHandler implements ActionHandlerInterface {
 
@@ -8,6 +9,17 @@ export abstract class AbstractActionHandler implements ActionHandlerInterface {
 
   private _stepEmitter!: EventEmitter<number>;
 
+  private _params!: ParamMap;
+
+  constructor() {}
+
+  get params(): ParamMap {
+    return this._params;
+  }
+
+  set params(value: ParamMap) {
+    this._params = value;
+  }
 
   get stepEmitter(): EventEmitter<number> {
     return this._stepEmitter;
@@ -25,7 +37,7 @@ export abstract class AbstractActionHandler implements ActionHandlerInterface {
     this._context = value;
   }
 
-  abstract onClick(event: Event): void;
+  abstract onClick(event: Event): any;
 
   onFocus(event: Event): void {}
 

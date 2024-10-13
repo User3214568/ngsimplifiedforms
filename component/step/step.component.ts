@@ -1,10 +1,7 @@
 import {
-  AfterContentChecked,
-  AfterViewInit,
-  Component, EventEmitter, Input, OnInit,
+  Component, EventEmitter, Input,
   Output,
 } from '@angular/core';
-import {FormStepInterface} from "../../model/form-step.interface";
 import {GroupWrapperComponent} from "../group-wrapper/group-wrapper.component";
 import {ActionWrapperComponent} from "../action-wrapper/action-wrapper.component";
 import {StepContext} from "../../service/context/step.context";
@@ -19,19 +16,13 @@ import {StepContext} from "../../service/context/step.context";
   ],
   styleUrl: './step.component.scss'
 })
-export class StepComponent implements AfterContentChecked {
+export class StepComponent {
 
   @Output() protected stepDataEmitter: EventEmitter<number>;
 
-  protected valid!: boolean;
   @Input() stepContext!: StepContext;
 
   constructor() {
     this.stepDataEmitter = new EventEmitter<number>();
   }
-
-  ngAfterContentChecked() {
-    this.valid = this.stepContext.validity.isValid;
-  }
-
 }

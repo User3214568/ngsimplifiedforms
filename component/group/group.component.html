@@ -1,4 +1,4 @@
-<div>{{ groupContext.group.name }} - {{ groupContext.group.title }}</div>
+<div *ngIf="groupContext.group.title">{{ groupContext.group.title }}</div>
 <div [formGroup]="formRxGroup">
   <app-form-element-wrapper
     [formElementWrapperContext]="{formGroup: formRxGroup, formElements: groupContext.group.formElements, currentGroup: groupContext.group}"

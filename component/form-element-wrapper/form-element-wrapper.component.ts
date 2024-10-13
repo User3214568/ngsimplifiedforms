@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/co
 import {FormElementWrapperContext} from "../../service/context/form-element-wrapper.context";
 import {ComponentConfigManager} from "../../config/component-config.manager";
 import {FormElementContext} from "../../service/context/form-element.context";
+import {FormElementInterface} from "../../model/form-element.interface";
 
 @Component({
   selector: 'app-form-element-wrapper',
@@ -21,7 +22,12 @@ export class FormElementWrapperComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.formElementWrapperContext.formElements.forEach((element) => {
+    const sortedEntries = new Map<string, FormElementInterface>(
+      [...this.formElementWrapperContext.formElements.entries()].sort(
+        ([, objA], [, objB]) => (objB.weight ?? 0) - (objA.weight ?? 0)
+      )
+    );
+    sortedEntries.forEach((element) => {
       const ref = this.formElementsHostContainer.createComponent(
         element.component ?? this.componentConfigManager.getComponent(element.type)
       );

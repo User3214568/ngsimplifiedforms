@@ -4,6 +4,11 @@ import {FormGroupInterface} from "../../model/form-group.interface";
 import {ActionRegistrationService} from "./action-registration.service";
 import {FormElementAnnotationInterface} from "../../model/form-element.interface";
 import {Injectable} from "@angular/core";
+import {
+  FormActionAnnotationInterface,
+  FormCustomActionAnnotationInterface,
+  FormDefaultActionAnnotationInterface
+} from "../../model/form-action.interface";
 
 @Injectable()
 export class StepRegistrationService {
@@ -12,13 +17,21 @@ export class StepRegistrationService {
     private readonly groupRegistrationService: GroupRegistrationService,
     private readonly actionRegistrationService: ActionRegistrationService
   ) {}
-  public getStepsMap(steps?: FormStepAnnotationInterface[]): Map<number, FormStepInterface> {
+  public getStepsMap(
+    steps?: FormStepAnnotationInterface[],
+    extraActions?: Array<FormCustomActionAnnotationInterface|FormDefaultActionAnnotationInterface>
+  ): Map<number, FormStepInterface> {
     const map = new Map<number, FormStepInterface>();
     if (!steps) {
-      map.set(1, this.getDefaultStep());
+      const defaultStep = this.getDefaultStep();
+      defaultStep.actions = this.actionRegistrationService.getActionArray(extraActions) ?? [];
+      map.set(1, defaultStep);
       return map;
     }
     steps.forEach((step) => {
+      if (step.stepNumber === 1 && extraActions) {
+        step.actions = [...step.actions, ...extraActions];
+      }
       map.set(step.stepNumber, {
         ...step,
         actions: this.actionRegistrationService.getActionArray(step.actions),

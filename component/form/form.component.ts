@@ -1,9 +1,9 @@
 import {
-  Component, OnInit
+  Component, Input, OnInit
 } from '@angular/core';
 import {FormService} from "../../service/form.service";
 import {ActivatedRoute} from "@angular/router";
-import {FormInterface} from "../../model/form.interface";
+import {FormInputData, FormInterface} from "../../model/form.interface";
 import {StepWrapperComponent} from "../step-wrapper/step-wrapper.component";
 import {NgIf} from "@angular/common";
 import {StepWrapperContext} from "../../service/context/step-wrapper.context";
@@ -20,6 +20,8 @@ import {StepWrapperContext} from "../../service/context/step-wrapper.context";
 })
 export class FormComponent<T> implements OnInit {
 
+  @Input() formInputData!: FormInputData<T>;
+
   protected _model!: T;
 
   protected form!: FormInterface;
@@ -32,16 +34,25 @@ export class FormComponent<T> implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const instance: T|undefined = this.route.snapshot.data['instance'];
-    if (instance) {
-      this._model = instance;
-      this.form = this.formService.getFormInstance(instance['constructor']['name']);
-      this.form.editMode = this.route.snapshot.data['editMode'] ?? false;
+    const formData = this.getFormInputData();
+    if (formData.instance) {
+      this._model = formData.instance;
+      this.form = this.formService.getFormInstance(formData.instance['constructor']['name']);
+      this.form.editMode = formData.editMode;
       this.stepWrapperContext = {
         steps: this.form.steps,
         value: this._model as object,
         editMode: this.form.editMode ?? false
       };
     }
+  }
+  getFormInputData(): FormInputData<T> {
+    if (this.route.snapshot.data['instance']) {
+      return {
+        instance: this.route.snapshot.data['instance'],
+        editMode: this.route.snapshot.data['editMode']
+      };
+    }
+    return this.formInputData;
   }
 }

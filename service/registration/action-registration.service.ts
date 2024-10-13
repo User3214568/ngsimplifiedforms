@@ -27,6 +27,7 @@ export class ActionRegistrationService {
       return {
         ...action,
         component: undefined,
+        requireValidation: action.requireValidation || action.requireValidation === undefined,
         handler: handler
       };
     })
